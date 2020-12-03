@@ -8,13 +8,13 @@ from .models import User
 
 
 def signup(request):
-    return render(request, '../templates/signup/index.html')
+    return render(request, '../frontend/signup/index.html')
 
 
 class patient_signup(CreateView):
     model = User
     form_class = PatientSignUpForm
-    template_name = '../templates/signup/patient.html'
+    template_name = '../frontend/signup/patient.html'
 
     def form_valid(self, form):
         user = form.save()
@@ -25,7 +25,7 @@ class patient_signup(CreateView):
 class doctor_signup(CreateView):
     model = User
     form_class = PatientSignUpForm
-    template_name = '../templates/signup/doctor.html'
+    template_name = '../frontend/signup/doctor.html'
 
     def form_valid(self, form):
         user = form.save()
@@ -47,7 +47,7 @@ def login_request(request):
                 messages.error(request, "Invalid username or password")
         else:
             messages.error(request, "Invalid username or password")
-    return render(request, '../templates/login.html',
+    return render(request, '../frontend/login.html',
                   context={'form': AuthenticationForm()})
 
 

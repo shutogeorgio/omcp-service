@@ -1,4 +1,4 @@
-## OMCP (Online Medical Consaltation Platform) Service Prototype
+## OMCP (Online Medical Consultation Platform) Service Prototype
 ### Setup Environment
 #### Prerequisites
 - Docker for Desktop
@@ -13,7 +13,7 @@ $ docker-compose run omcp django-admin startproject omcp .
 $ docker-compose up -d
 ``` 
 
-#### 3rd. Applied Database Schema With Django ORMS
+#### 3rd. Database Migration
 ```bash
 $ docker-compose run omcp python manage.py migrate
 ```
