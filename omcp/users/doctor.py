@@ -8,7 +8,7 @@ class Doctor(models.Model):
     country = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
     zipcode = models.CharField(max_length=50)
-    request = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20)
     image_folder = models.CharField(max_length=100)
     speciality = models.CharField(max_length=100)
     validity = models.CharField(max_length=100)

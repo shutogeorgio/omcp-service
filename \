@@ -1,0 +1,19 @@
+add: use models
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Thu Dec 3 22:56:20 2020 +0900
+#
+# On branch feature/user-login-auth
+# Changes to be committed:
+#	modified:   omcp/omcp/settings.py
+#	new file:   omcp/users/doctor.py
+#	new file:   omcp/users/forms.py
+#	new file:   omcp/users/license.py
+#	new file:   omcp/users/migrations/0001_initial.py
+#	new file:   omcp/users/patient.py
+#	new file:   omcp/users/templates/users/register.html
+#	new file:   omcp/users/user.py
+#	new file:   omcp/users/validity.py
+#

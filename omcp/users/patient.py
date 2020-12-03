@@ -8,5 +8,6 @@ class Patient(models.Model):
     country = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
     zipcode = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=20)
     request = models.CharField(max_length=100)
     image_folder = models.CharField(max_length=100)

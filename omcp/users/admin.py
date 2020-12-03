@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .user import User
+from .patient import Patient
+from .doctor import Doctor
+from .license import License
 
-# Register your models here.
+admin.site.register(User)
+admin.site.register(Patient)
+admin.site.register(Doctor)
+admin.site.register(License)
