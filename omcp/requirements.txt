@@ -4,3 +4,4 @@ django-crispy-forms==1.7.2
 djangorestframework==3.12.0
 djangorestframework-jwt==1.11.0
 Pillow==8.0.1
+django-widget-tweaks==1.4.8

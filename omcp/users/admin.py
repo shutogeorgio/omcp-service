@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .user import User
+from .models import User
 from .patient import Patient
 from .doctor import Doctor
 from .license import License

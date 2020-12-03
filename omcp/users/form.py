@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.db import transaction
 
-from .user import User
+from .models import User
 from .patient import Patient
 from .doctor import Doctor
 from .license import License
@@ -46,7 +46,7 @@ class DoctorSignUpForm(UserCreationForm):
     address = forms.CharField(required=True)
     zipcode = forms.CharField(required=True)
     phone_number = forms.CharField(required=True)
-    license_image = forms.Media(required=True)
+    license_image = forms.CharField(required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User
