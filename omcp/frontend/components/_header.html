@@ -1,0 +1,19 @@
+<header class="flex bg-white items-center border-b border-gray-200 justify-between flex-wrap py-3 sm:py-5 px-10 sm:px-20">
+    <div class="flex items-center">
+        <a class="flex" href="/">
+            <img src="/static/img/logo.png" class="fill-current h-8 w-16 mr-3 rounded-full" />
+        </a>
+        {% if user.is_authenticated %}
+            <a class="text-sm flex pl-5 text-pink-500" href="/">diagnosis</a>
+            <a class="text-sm flex pl-5 text-pink-500" href="/">summary</a>
+        {% endif %}
+    </div>
+    <div class="flex ml-auto">
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="px-3 py-2 border border-pink-500 text-pink-500 rounded text-sm">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="mr-3 px-4 py-2 text-white bg-pink-500 rounded text-sm">Login</a>
+            <a href="{% url 'signup' %}" class="px-3 py-2 border border-pink-500 text-pink-500 rounded text-sm">Sign up</a>
+        {% endif %}
+    </div>
+</header>

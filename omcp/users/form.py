@@ -46,7 +46,7 @@ class DoctorSignUpForm(UserCreationForm):
     address = forms.CharField(required=True)
     zipcode = forms.CharField(required=True)
     phone_number = forms.CharField(required=True)
-    license_image = forms.CharField(required=True)
+    license_image = forms.ImageField(required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User

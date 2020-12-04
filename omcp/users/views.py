@@ -7,6 +7,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from .models import User
 
 
+def home(request):
+    return render(request, '../frontend/index.html')
+
 def signup(request):
     return render(request, '../frontend/signup/index.html')
 
@@ -24,7 +27,7 @@ class patient_signup(CreateView):
 
 class doctor_signup(CreateView):
     model = User
-    form_class = PatientSignUpForm
+    form_class = DoctorSignUpForm
     template_name = '../frontend/signup/doctor.html'
 
     def form_valid(self, form):
