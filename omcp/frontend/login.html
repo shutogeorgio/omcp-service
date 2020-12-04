@@ -1,0 +1,38 @@
+{% extends '/omcp/frontend/components/_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="row">
+    <div class="mx-auto">
+        <div class="flex">
+            <div class="flex flex-col w-3/5 mx-auto py-5 px-10 bg-white rounded">
+                <div class="card-header text-black">
+                    <h2 class="text-xl text-pink-500">Login</h2>
+                </div>
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
+                    {% endfor %}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+                <form action="{% url 'login' %}" method="POST" class="flex flex-col mt-3" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="flex flex-col">
+                            <div class="text-gray-700 text-sm">{{ field.label_tag }}</div>
+                            {% render_field field class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mt-3" %}
+                            {% for error in field.errors %}
+                            <span style="color:red">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <input type="submit" value="Login" class="bg-pink-500 hover:bg-pink-300 text-white text-sm text-white py-2 px-4 rounded ml-auto mt-3">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
