@@ -9,7 +9,8 @@
   <body>
     <main>
         {% include '/omcp/frontend/components/_header.html' %}
-        <div class="container p-20 bg-pink-500">{% block content %}{% endblock %}</div>
+        <div>{% block content %}{% endblock %}</div>
+        {% include '/omcp/frontend/components/_footer.html' %}
     </main>
   </body>
 </html>

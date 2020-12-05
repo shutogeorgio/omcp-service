@@ -10,6 +10,7 @@ from .models import User
 def home(request):
     return render(request, '../frontend/index.html')
 
+
 def signup(request):
     return render(request, '../frontend/signup/index.html')
 
