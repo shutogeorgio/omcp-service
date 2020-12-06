@@ -70,7 +70,6 @@ class DoctorSignUpForm(UserCreationForm):
         doctor.save()
 
         cert = License.objects.create(doctor=doctor)
-        cert.image_folder = self.cleaned_data.get('image_folder')
-        cert.image = self.instance
+        cert.image_folder = self.cleaned_data.get('license_image')
         cert.save()
         return user
