@@ -10,5 +10,6 @@ class Doctor(models.Model):
     zipcode = models.CharField(max_length=50, default="")
     phone_number = models.CharField(max_length=20, default="")
     image_folder = models.CharField(max_length=100, null="")
+    image = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
     speciality = models.CharField(max_length=100, default="")
     validity = models.CharField(max_length=100, default=" ")

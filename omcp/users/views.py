@@ -6,13 +6,20 @@ from .form import PatientSignUpForm, DoctorSignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User
 
+from .patient import Patient
+from .doctor import Doctor
 
+
+# Home
 def home(request):
-    return render(request, '../frontend/index.html')
+    template_path = '../frontend/index.html'
+    return render(request, template_path)
 
 
+# Login & Signup Logic
 def signup(request):
-    return render(request, '../frontend/signup/index.html')
+    template_path = '../frontend/signup/index.html'
+    return render(request, template_path)
 
 
 class patient_signup(CreateView):
@@ -38,6 +45,7 @@ class doctor_signup(CreateView):
 
 
 def login_request(request):
+    template_path =  '../frontend/login.html'
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -51,10 +59,59 @@ def login_request(request):
                 messages.error(request, "Invalid username or password")
         else:
             messages.error(request, "Invalid username or password")
-    return render(request, '../frontend/login.html',
+    return render(request, template_path,
                   context={'form': AuthenticationForm()})
 
 
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+
+# Profile Configuration
+def desc_own_profile(request):
+    current_user = request.user
+    template_path = '../frontend/profile/own_desc.html'
+    if current_user.is_patient:
+        profile = Patient.objects.get(user_id=current_user.id)
+    elif current_user.is_doctor:
+        profile = Doctor.objects.get(user_id=current_user.id)
+    else:
+        profile = ''
+    return render(request, template_path, context={'user': current_user, 'profile': profile})
+
+
+def desc_profile(request, user_id):
+    req_user = User.objects.get(id=user_id)
+    template_path = '../frontend/profile/desc.html'
+    if req_user.is_patient:
+        profile = Patient.objects.get(user_id=req_user.id)
+    elif req_user.is_doctor:
+        profile = Doctor.objects.get(user_id=req_user.id)
+    else:
+        profile = ''
+    return render(request, template_path, context={'user': req_user, 'profile': profile})
+
+
+def update_profile(request):
+    current_user = request.user
+    template_path = '../frontend/profile/edit.html'
+    if current_user.is_patient:
+        profile = Patient.objects.get(user_id=current_user.id)
+    elif current_user.is_doctor:
+        profile = Doctor.objects.get(user_id=current_user.id)
+    else:
+        redirect('/login')
+    return render(request, template_path, context={'user': current_user, 'profile': profile})
+
+
+def handle_update_profile(request):
+    current_user = request.user
+    template_path = '../frontend/profile/desc.html'
+    if current_user.is_patient:
+        profile = Patient.objects.get(user_id=current_user.id)
+    elif current_user.is_doctor:
+        profile = Doctor.objects.get(user_id=current_user.id)
+    else:
+        redirect('/login')
+    return render(request, template_path, context={'user': current_user, 'profile': profile})

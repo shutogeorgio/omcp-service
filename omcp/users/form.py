@@ -34,7 +34,7 @@ class PatientSignUpForm(UserCreationForm):
         patient.zipcode = self.cleaned_data.get('zipcode')
         patient.phone_number = self.cleaned_data.get('phone_number')
         patient.image_folder = "no-image.png"
-        patient.request = ""
+        patient.information = ""
         patient.save()
         return user
 
@@ -54,7 +54,7 @@ class DoctorSignUpForm(UserCreationForm):
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
-        user.is_patient = True
+        user.is_doctor = True
         user.email = self.cleaned_data.get('email')
         user.save()
 
@@ -69,7 +69,8 @@ class DoctorSignUpForm(UserCreationForm):
         doctor.validity = Validity.IN_REVIEW
         doctor.save()
 
-        license = License.objects.create(doctor=doctor)
-        license.image_folder = self.cleaned_data.get('license_image')
-        license.save()
+        cert = License.objects.create(doctor=doctor)
+        cert.image_folder = self.cleaned_data.get('image_folder')
+        cert.image = self.instance
+        cert.save()
         return user
