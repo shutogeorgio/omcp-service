@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.forms import ModelForm
 from django.db import transaction
 
 from .models import User
@@ -33,7 +34,7 @@ class PatientSignUpForm(UserCreationForm):
         patient.address = self.cleaned_data.get('address')
         patient.zipcode = self.cleaned_data.get('zipcode')
         patient.phone_number = self.cleaned_data.get('phone_number')
-        patient.image_folder = "no-image.png"
+        patient.image = "users/no-img.svg"
         patient.information = ""
         patient.save()
         return user
@@ -64,12 +65,31 @@ class DoctorSignUpForm(UserCreationForm):
         doctor.address = self.cleaned_data.get('address')
         doctor.zipcode = self.cleaned_data.get('zipcode')
         doctor.phone_number = self.cleaned_data.get('phone_number')
-        doctor.image_folder = "no-image.png"
+        doctor.image = "users/no-img.svg"
         doctor.speciality = ""
         doctor.validity = Validity.IN_REVIEW
         doctor.save()
 
         cert = License.objects.create(doctor=doctor)
-        cert.image_folder = self.cleaned_data.get('license_image')
+        cert.image = 'licenses/sample.jpg'
         cert.save()
         return user
+
+
+class PatientProfileForm(ModelForm):
+    class Meta:
+        model = Patient
+        fields = ['country', 'address', 'zipcode', 'phone_number', 'image', 'information']
+
+
+class DoctorProfileForm(ModelForm):
+    class Meta:
+        model = Doctor
+        fields = ['country', 'address', 'zipcode', 'phone_number', 'image', 'speciality']
+
+
+class LicenseReForm(ModelForm):
+    # image = forms.ImageField(widget=)
+    class Meta:
+        model = License
+        exclude = ['doctor', 'image-clear']

@@ -1,5 +1,6 @@
 from django.db import models
 from .models import User
+from .validity import Validity
 
 
 class Doctor(models.Model):
@@ -9,7 +10,6 @@ class Doctor(models.Model):
     address = models.CharField(max_length=100, default="")
     zipcode = models.CharField(max_length=50, default="")
     phone_number = models.CharField(max_length=20, default="")
-    image_folder = models.CharField(max_length=100, null="")
-    image = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
+    image = models.FileField(upload_to='users/', blank=True, default='users/no-img.svg')
     speciality = models.CharField(max_length=100, default="")
-    validity = models.CharField(max_length=100, default=" ")
+    validity = models.CharField(max_length=100, default=Validity.IN_REVIEW)

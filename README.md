@@ -17,3 +17,8 @@ $ docker-compose up -d
 ```bash
 $ docker-compose run omcp python manage.py migrate
 ```
+
+#### 🏯  4th. Add Sample Data
+```bash
+$ docker-compose run omcp python3 manage.py seed --mode=refresh
+```

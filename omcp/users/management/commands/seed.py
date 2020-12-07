@@ -9,6 +9,7 @@ from ...doctor import Doctor
 from ...license import License
 
 # python manage.py seed --mode=refresh
+from ...validity import Validity
 
 """ Clear all data and creates addresses """
 MODE_REFRESH = 'refresh'
@@ -37,7 +38,7 @@ def clear_data():
     License.objects.all().delete()
 
 
-def create_doctor():
+def create_review_doctor():
     user = User.objects.create()
     user.username = 'doctor'
     user.email = 'doctor@code.berlin'
@@ -52,11 +53,13 @@ def create_doctor():
     doctor.address = 'Lohmühlenstraße 65, 12435 Berlin, Germany'
     doctor.zipcode = '12435'
     doctor.phone_number = '+49 30 12085961'
-    doctor.image_folder = "no-image.png"
+    doctor.image = 'users/no-img.svg'
+    doctor.validity = Validity.IN_REVIEW
     doctor.speciality = "IT"
     doctor.save()
 
     license = License.objects.create(doctor=doctor)
+    license.image = 'licenses/sample.png'
     license.save()
     logger.info("{} doctor created.".format(doctor))
     return user
@@ -77,7 +80,7 @@ def create_patient():
     patient.address = 'Lohmühlenstraße 65, 12435 Berlin, Germany'
     patient.zipcode = '12435'
     patient.phone_number = '+49 30 12085961'
-    patient.image_folder = "no-image.png"
+    patient.image = 'users/no-img.svg'
     patient.request = "IT"
     patient.save()
     logger.info("{} doctor created.".format(patient))
@@ -95,5 +98,5 @@ def run_seed(self, mode):
     if mode == MODE_CLEAR:
         return
 
-    create_doctor()
+    create_review_doctor()
     create_patient()
