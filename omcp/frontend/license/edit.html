@@ -2,27 +2,35 @@
 {% load widget_tweaks %}
 {% block content %}
 <div class="row p-20 bg-pink-500">
-    <div class="mx-auto container">
+    <div class="mx-auto">
         <div class="flex">
             <div class="flex flex-col w-3/5 mx-auto py-5 px-10 bg-white rounded">
-                <div class="card-header text-black">
-                    <h2 class="text-xl text-pink-500">Register as Patient</h2>
+                <div class="text-black">
+                    <h2 class="text-xl text-pink-500">Edit License</h2>
                 </div>
-                <form action="{% url 'signup_patient' %}" enctype="multipart/form-data" method="POST" class="flex flex-col mt-3" novalidate>
+                <form action="{% url 'license_update' %}" enctype="multipart/form-data" method="POST" class="flex flex-col mt-3" novalidate>
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
-                        <div class="flex flex-col">
-                            <div class="text-gray-700 text-sm">{{ field.label_tag }}</div>
+                        <div class="flex flex-col text-gray-700 text-sm">
+                            <div class="text-gray-700 text-md ">{{ field.label_tag }}</div>
                             {% render_field field class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mt-3" %}
                             {% for error in field.errors %}
                             <span style="color:red">{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% endfor %}
-                    <input type="submit" value="Register" class="bg-pink-500 hover:bg-pink-300 text-white text-sm text-white py-2 px-4 rounded ml-auto mt-3">
+                    <input type="submit" value="Update" class="bg-pink-500 hover:bg-pink-300 text-white text-sm text-white py-2 px-4 rounded ml-auto mt-3">
                 </form>
             </div>
         </div>
     </div>
 </div>
+<style>
+#image-clear_id {
+    display: none!important;
+}
+.flex.flex-col.text-gray-700.text-sm label {
+    display: none!important;
+}
+</style>
 {% endblock %}

@@ -4,12 +4,14 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+      <link rel="icon" type="image/png" sizes="32x32" href="/static/img/logo.png">
       <title>OMCP</title>
   </head>
   <body>
     <main>
         {% include '/omcp/frontend/components/_header.html' %}
-        <div class="container p-20 bg-pink-500">{% block content %}{% endblock %}</div>
+        <div>{% block content %}{% endblock %}</div>
+        {% include '/omcp/frontend/components/_footer.html' %}
     </main>
   </body>
 </html>

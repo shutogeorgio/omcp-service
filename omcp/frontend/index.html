@@ -2,11 +2,59 @@
 {% load widget_tweaks %}
 {% block content %}
 <div class="row">
-    <div class="mx-auto">
-        <div class="flex">
-            <div class="flex flex-col w-3/5 mx-auto">
-                <div class="card-header text-black">
-                    <h2>Home</h2>
+    <div class="flex">
+        <div class="flex flex-col">
+            <div class="flex p-10 mx-auto items-center row p-20 bg-pink-500">
+                <div class="flex flex-col w-5/12 text-white mr-auto items-center text-left">
+                    <h2 class="text-3xl mr-auto">Online Medical Consultation Platform for everyone</h2>
+                    <span class="mt-1 mr-auto">Take medical Consultation handly and securely</span>
+                    <a href="{% url 'signup' %}" class="bg-white hover:bg-pink-300 text-pink-500 text-sm text-white py-2 px-10 rounded mr-auto mt-3">Try it today!</a>
+                </div>
+                <div class="flex ml-auto w-5/12 items-center">
+                    <img src="/static/img/lp-1.jpg" alt="" class="w-full">
+                </div>
+            </div>
+            <div class="flex p-10 mx-auto items-center p-20 bg-white">
+                <div class="flex mr-auto w-5/12 items-center">
+                    <img src="/static/img/lp-2.jpg" alt="" class="w-full">
+                </div>
+                <div class="flex flex-col w-5/12 text-black ml-auto items-center text-left">
+                    <h2 class="text-3xl mr-auto">Make your medical care  more secure.</h2>
+                    <span class="mt-1 mr-auto text-gray-500">See our certified doctors today !</span>
+                    <a href="{% url 'signup_patient' %}" class="bg-pink-500 over:bg-pink-300 text-sm text-white py-2 px-10 rounded mr-auto mt-3">Sign up today !</a>
+                </div>
+            </div>
+            <div class="flex p-10 mx-auto items-center bg-white">
+                <div class="flex flex-col mx-auto w-1/4 items-center">
+                    <img src="/static/img/safety.png" alt="safety" class="w-1/5">
+                    <dl class="mt-2 mx-auto text-center">
+                        <dt class="text-xl leading-loose">Reduce the risk of affection </dt>
+                        <dd class="ml-0 mr-0 mt-1 mb-0 leading-tight text-gray-700">There’re no concerns of getting affected in some diseases in hospital</dd>
+                    </dl>
+                </div>
+                <div class="flex flex-col mx-auto w-1/4 items-center">
+                    <img src="/static/img/cert.svg" alt="cert" class="w-1/5">
+                    <dl class="mt-2 mx-auto text-center">
+                        <dt class="text-xl leading-loose">Doctors are verified</dt>
+                        <dd class="ml-0 mr-0 mt-1 mb-0 leading-tight text-gray-700">Doctors are required to submit legal document to register.</dd>
+                    </dl>
+                </div>
+                <div class="flex flex-col mx-auto w-1/4 items-center">
+                    <img src="/static/img/clock.svg" alt="clock" class="w-1/5">
+                    <dl class="mt-2 mx-auto text-center">
+                        <dt class="text-xl leading-loose">Flexible of time</dt>
+                        <dd class="ml-0 mr-0 mt-1 mb-0 leading-tight text-gray-700">The time slot for medical exam is very flexible. So you can choose comfortable time.</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="flex p-10 mx-auto items-center row p-20 bg-white">
+                <div class="flex flex-col w-5/12 mr-auto items-center text-left">
+                    <h2 class="text-3xl leading-tight mr-auto">Online Medical Consultation Platform for everyone</h2>
+                    <span class="mt-1 mr-auto">Take medical Consultation handly and securely</span>
+                    <a href="{% url 'signup_doctor' %}" class="bg-pink-400 hover:bg-pink-300 text-white text-sm text-white py-2 px-10 rounded mr-auto mt-3">Sign up as doctor !</a>
+                </div>
+                <div class="flex ml-auto w-5/12 items-center">
+                    <img src="/static/img/lp-3.jpg" alt="lp-3" class="w-full">
                 </div>
             </div>
         </div>

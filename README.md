@@ -4,16 +4,21 @@
 - 🐳 Docker for Desktop
 
 ### Application Configuration
-#### 🚜 1st. Build Image
+#### 🚜  1st.  Build Image
 ```bash
 $ docker-compose build
 ```
-#### 🏎 2nd. Run Application
+#### 🏎  2nd.   Run Application
 ```bash
 $ docker-compose up -d
 ``` 
 
-#### 🚛 3rd. Database Migration
+#### 🚛  3rd.  Database Migration
 ```bash
 $ docker-compose run omcp python manage.py migrate
+```
+
+#### 🏯  4th. Add Sample Data
+```bash
+$ docker-compose run omcp python3 manage.py seed --mode=refresh
 ```
