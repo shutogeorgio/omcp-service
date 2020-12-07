@@ -59,7 +59,7 @@ def create_review_doctor():
     doctor.save()
 
     license = License.objects.create(doctor=doctor)
-    license.image = 'licenses/sample.png'
+    license.image = 'licenses/sample.jpg'
     license.save()
     logger.info("{} doctor created.".format(doctor))
     return user
