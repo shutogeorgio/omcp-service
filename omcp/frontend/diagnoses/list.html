@@ -1,0 +1,34 @@
+{% extends '/omcp/frontend/components/_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="row p-10">
+    <div class="mx-auto">
+        <div class="flex flex-col items-center">
+            {% include '/omcp/frontend/components/_searchbar.html' %}
+            <div class="flex flex-col w-4/5 mx-auto py-5 bg-white rounded">
+                <div class="text-black">
+                    <h2 class="text-xl text-pink-500">Diagnosis Lists</h2>
+                </div>
+                <div class="flex w-full flex-wrap mt-5">
+                    {% for diagnosis in diagnoses %}
+                    <a href="/diagnoses/{{ diagnosis.id }}" class="flex w-1/4 flex-col border border-gray-400 mr-5">
+                        <img src="{{ diagnosis.image.url }}" class="flex h-25 w-full" />
+                        <div class="flex flex-col p-2">
+                            <div class="text-xl">{{ diagnosis.title }}</div>
+                            <div class="text-sm text-gray-700">{{ diagnosis.description }}</div>
+                            <div class="flex">
+                                <div class="text-sm text-gray-500 mt-1">{{ diagnosis.date }}</div>
+                                <div class="flex ml-auto items-center">
+                                    <img src="{{ diagnosis.doctor.image.url }}" class="h-5 w-5 rounded-full mr-1" />
+                                    <div>{{ diagnosis.doctor.name }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

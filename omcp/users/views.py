@@ -127,6 +127,7 @@ def desc_license(request):
     return render(request, template_path,
                   context={'user': current_user, 'profile': profile, 'license': cert})
 
+
 def update_license(request):
     current_user = request.user
     template_path = '../frontend/license/edit.html'
@@ -143,4 +144,5 @@ def update_license(request):
                 return redirect("/profile/{}".format(current_user.id))
     else:
         redirect('/login')
-    return render(request, template_path, context={'user': current_user, 'profile': profile, 'license': cert, 'form': form})
+    return render(request, template_path,
+                  context={'user': current_user, 'profile': profile, 'license': cert, 'form': form})

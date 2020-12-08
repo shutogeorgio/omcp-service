@@ -89,7 +89,7 @@ class DoctorProfileForm(ModelForm):
 
 
 class LicenseReForm(ModelForm):
-    # image = forms.ImageField(widget=)
+    # image = forms.py.ImageField(widget=)
     class Meta:
         model = License
         exclude = ['doctor', 'image-clear']

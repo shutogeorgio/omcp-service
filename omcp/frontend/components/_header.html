@@ -4,7 +4,7 @@
             <img src="/static/img/logo.png" class="fill-current h-8 w-16 mr-3 rounded-full" />
         </a>
         {% if user.is_authenticated %}
-            <a class="text-sm flex pl-5 text-pink-500" href="/">Diagnosis</a>
+            <a class="text-sm flex pl-5 text-pink-500" href="{% url 'list_diagnosis' %}">Diagnosis</a>
             <a class="text-sm flex pl-5 text-pink-500" href="/">Summary</a>
             {% if user.is_doctor %}
                 <a class="text-sm flex pl-5 text-pink-500" href="/license">License</a>

@@ -15,7 +15,7 @@ $ docker-compose up -d
 
 #### 🚛  3rd.  Database Migration
 ```bash
-$ docker-compose run omcp python manage.py migrate
+$ docker-compose run omcp python3 manage.py migrate
 ```
 
 #### 🏯  4th. Add Sample Data

@@ -1,0 +1,18 @@
+<div class="flex mb:flex-col w-full items-center bg-pink-500  p-10">
+    <img class="w-5/12" src="/static/img/jojo.jpg">
+    <div class="bg-white w-5/12 ml-auto p-20">
+        <dl class="m-0">
+            <dt class="text-xl">Take medical diagnosis easily</dt>
+            <dd class="mt-1 mb-0 ml-o mr-0 text-sm">Let’s take medical future diagnosis with trustful doctors.</dd>
+        </dl>
+        <form action="/" class="flex relative">
+            <input class="relative shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mt-3" type="text" name="search" placeholder="Mental ..." />
+            <button type="submit" class="relative -m-10">
+                <img class="h-5 w-5" src="/static/img/search.svg" >
+            </button>
+        </form>
+        {% if user.is_doctor %}
+            <a href="{% url 'create_diagnosis' %}" class="mt-3 block bg-pink-500 hover:bg-pink-300 text-white text-sm text-white py-2 px-4 rounded ml-auto mt-3">Create Diagnosis</a>
+        {% endif %}
+    </div>
+</div>
