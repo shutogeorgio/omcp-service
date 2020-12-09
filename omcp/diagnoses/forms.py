@@ -1,4 +1,5 @@
 from django import forms
+from django.core.files.storage import FileSystemStorage
 from django.forms import ModelForm
 
 from .models import Diagnosis
@@ -18,15 +19,18 @@ class DiagnosisCreationForm(ModelForm):
             'date': DateInput(),
         }
 
-    def save(self, doctor):
+    def save(self, files, doctor):
         diagnosis = Diagnosis.objects.create(doctor=doctor)
         diagnosis.status = RegisterStatus.UNREGISTERED
-        diagnosis.title = self.cleaned_data.get('title')
-        diagnosis.description = self.cleaned_data.get('description')
-        diagnosis.date = self.cleaned_data.get('date')
-        diagnosis.image = self.cleaned_data.get('image')
-        diagnosis.video_link = self.cleaned_data.get('video_link')
-        diagnosis.video_password = self.cleaned_data.get('video_link')
+        diagnosis.title = self.data.get('title')
+        diagnosis.description = self.data['description']
+        diagnosis.date = self.data['date']
+        image_data = files['image']
+        fs = FileSystemStorage()
+        filename = fs.save(image_data.name, image_data)
+        diagnosis.image = filename
+        diagnosis.video_link = self.data['video_link']
+        diagnosis.video_password = self.data['video_password']
         diagnosis.save()
         return diagnosis
 

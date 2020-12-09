@@ -45,9 +45,9 @@ def create_diagnosis(request):
         if current_user.is_doctor:
             if form.is_valid():
                 doctor = get_object_or_404(Doctor, user_id=current_user.id)
-                form = DiagnosisCreationForm(request.POST or None,
-                                             request.FILES or None, instance=doctor)
-                form.save(doctor)
+                form = DiagnosisCreationForm(request.POST,
+                                             request.FILES, instance=doctor)
+                form.save(request.FILES, doctor)
                 return redirect('/diagnoses')
     return render(request, template_path, context={'user': current_user, 'form': form})
 
