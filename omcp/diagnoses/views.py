@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
@@ -12,7 +13,10 @@ from .summary import Summary
 
 
 def list_diagnosis(request):
-    diagnoses = Diagnosis.objects.all()
+    all_diagnoses = Diagnosis.objects.all()
+    paginator = Paginator(all_diagnoses, 10)
+    p = request.GET.get('p')
+    diagnoses = paginator.get_page(p)
     current_user = request.user
     template_path = '../frontend/diagnoses/list.html'
     return render(request, template_path, context={'user': current_user, 'diagnoses': diagnoses})

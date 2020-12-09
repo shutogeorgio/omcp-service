@@ -14,7 +14,7 @@ services:
     build:
       context: .
     ports:
-      - 9201:8000
+      - 80:8000
     volumes:
       - ./omcp:/omcp
     command: python3 manage.py runserver 0.0.0.0:8000
