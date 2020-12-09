@@ -25,6 +25,9 @@ def desc_diagnosis(request, diagnosis_id):
         if diagnosis.status == str(RegisterStatus.REGISTERED):
             if diagnosis.patient.user.id == current_user.id:
                 reveal_boolean = True
+    elif current_user.is_doctor:
+        if diagnosis.doctor.user.id == current_user.id:
+            reveal_boolean = True
     template_path = '../frontend/diagnoses/desc.html'
     return render(request, template_path,
                   context={'user': current_user, 'diagnosis': diagnosis, 'reveal_boolean': reveal_boolean})
