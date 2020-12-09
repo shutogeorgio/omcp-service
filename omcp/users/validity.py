@@ -1,6 +1,6 @@
-import enum
+from django.db import models
 
 
-class Validity(enum.Enum):
+class Validity(models.TextChoices):
     IN_REVIEW = "IN_REVIEW"
     VALID = "VALID"

@@ -2,6 +2,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.views.generic import CreateView
+
+from .decorators import unauthenticated_user
 from .forms import PatientSignUpForm, DoctorSignUpForm, PatientProfileForm, DoctorProfileForm, LicenseReForm
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -127,6 +129,7 @@ def desc_license(request):
     return render(request, template_path,
                   context={'user': current_user, 'profile': profile, 'license': cert})
 
+
 def update_license(request):
     current_user = request.user
     template_path = '../frontend/license/edit.html'
@@ -143,4 +146,5 @@ def update_license(request):
                 return redirect("/profile/{}".format(current_user.id))
     else:
         redirect('/login')
-    return render(request, template_path, context={'user': current_user, 'profile': profile, 'license': cert, 'form': form})
+    return render(request, template_path,
+                  context={'user': current_user, 'profile': profile, 'license': cert, 'form': form})

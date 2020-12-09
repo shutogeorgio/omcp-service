@@ -3,10 +3,14 @@ from venv import logger
 from django.contrib.auth.hashers import make_password
 from django.core.management.base import BaseCommand
 
+
 from ...models import User
 from ...patient import Patient
 from ...doctor import Doctor
 from ...license import License
+
+from diagnoses.register_status import RegisterStatus
+from diagnoses.models import Diagnosis
 
 # python manage.py seed --mode=refresh
 from ...validity import Validity
@@ -38,7 +42,7 @@ def clear_data():
     License.objects.all().delete()
 
 
-def create_review_doctor():
+def create_doctor_and_diagnosis():
     user = User.objects.create()
     user.username = 'doctor'
     user.email = 'doctor@code.berlin'
@@ -62,10 +66,38 @@ def create_review_doctor():
     license.image = 'licenses/sample.jpg'
     license.save()
     logger.info("{} doctor created.".format(doctor))
+
+    diagnosis_1 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
+    diagnosis_1.title = 'Mental Illness Baster SS'
+    diagnosis_1.description = 'Free to talk to me'
+    diagnosis_1.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_1.video_password = '1qazxsw2'
+    diagnosis_1.status = RegisterStatus.UNREGISTERED
+    diagnosis_1.date = '2020-12-23'
+    diagnosis_1.save()
+
+    diagnosis_2 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
+    diagnosis_2.title = 'Mental Illness'
+    diagnosis_2.description = 'Free to talk to me'
+    diagnosis_2.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_2.video_password = '1qazxsw2'
+    diagnosis_2.status = RegisterStatus.UNREGISTERED
+    diagnosis_2.date = '2020-12-21'
+    diagnosis_2.save()
+
+    diagnosis_3 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
+    diagnosis_3.title = 'Preventive Medicine Trial'
+    diagnosis_3.description = 'Free to talk to me'
+    diagnosis_3.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_3.video_password = '1qazxsw2'
+    diagnosis_3.status = RegisterStatus.UNREGISTERED
+    diagnosis_3.date = '2020-12-21'
+    diagnosis_3.save()
+
     return user
 
 
-def create_patient():
+def create_patient_and_diagnosis():
     user = User.objects.create()
     user.username = 'patient'
     user.email = 'patient@code.berlin'
@@ -84,6 +116,17 @@ def create_patient():
     patient.request = "IT"
     patient.save()
     logger.info("{} doctor created.".format(patient))
+
+    diagnosis = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id-1),
+                                           patient=Patient.objects.get(user_id=user.id))
+    diagnosis.title = 'Mental Illness Baster SS'
+    diagnosis.description = 'Free to talk to me'
+    diagnosis.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis.video_password = '1qazxsw2'
+    diagnosis.status = RegisterStatus.REGISTERED
+    diagnosis.date = '2020-12-23'
+    diagnosis.save()
+
     return user
 
 
@@ -98,5 +141,5 @@ def run_seed(self, mode):
     if mode == MODE_CLEAR:
         return
 
-    create_review_doctor()
-    create_patient()
+    create_doctor_and_diagnosis()
+    create_patient_and_diagnosis()
