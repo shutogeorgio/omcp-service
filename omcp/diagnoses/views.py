@@ -24,11 +24,11 @@ def desc_diagnosis(request, diagnosis_id):
     current_user = request.user
     owner = False
     if current_user.is_patient:
-        if diagnosis.status == str(RegisterStatus.REGISTERED):
-            if diagnosis.patient.user.id == current_user.id:
+        if diagnosis.status != 'UNREGISTERED':
+            if diagnosis.patient.user_id == current_user.id:
                 owner = True
     elif current_user.is_doctor:
-        if diagnosis.doctor.user.id == current_user.id:
+        if diagnosis.doctor.user_id == current_user.id:
             owner = True
     template_path = '../frontend/diagnoses/desc.html'
     return render(request, template_path,
@@ -101,6 +101,21 @@ def create_summary(request, diagnosis_id):
 
     return render(request, template_path, context={'user': current_user, 'form': form, 'diagnosis': diagnosis})
 
+
+@login_required
+def list_own_diagnosis(request):
+    current_user = request.user
+    template_path = '../frontend/diagnoses/own_list.html'
+    context = {'user': current_user, 'summaries': ''}
+    if current_user.is_patient:
+        patient = get_object_or_404(Patient, user_id=current_user.id)
+        diagnoses = Diagnosis.objects.filter(patient=patient, status='COMPLETED')
+        context={'user': current_user, 'summaries': '', 'diagnoses': diagnoses}
+    elif current_user.is_doctor:
+        doctor = get_object_or_404(Doctor, user_id=current_user.id)
+        diagnoses = Diagnosis.objects.filter(doctor=doctor)
+        context = {'user': current_user, 'summaries': '', 'diagnoses': diagnoses}
+    return render(request, template_path, context=context)
 
 @login_required
 def desc_summary(request, diagnosis_id):
