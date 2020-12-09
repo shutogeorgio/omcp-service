@@ -75,6 +75,25 @@ def create_doctor_and_diagnosis():
     diagnosis_1.status = RegisterStatus.UNREGISTERED
     diagnosis_1.date = '2020-12-23'
     diagnosis_1.save()
+
+    diagnosis_2 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
+    diagnosis_2.title = 'Mental Illness'
+    diagnosis_2.description = 'Free to talk to me'
+    diagnosis_2.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_2.video_password = '1qazxsw2'
+    diagnosis_2.status = RegisterStatus.UNREGISTERED
+    diagnosis_2.date = '2020-12-21'
+    diagnosis_2.save()
+
+    diagnosis_3 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
+    diagnosis_3.title = 'Preventive Medicine Trial'
+    diagnosis_3.description = 'Free to talk to me'
+    diagnosis_3.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_3.video_password = '1qazxsw2'
+    diagnosis_3.status = RegisterStatus.UNREGISTERED
+    diagnosis_3.date = '2020-12-21'
+    diagnosis_3.save()
+
     return user
 
 
@@ -98,15 +117,15 @@ def create_patient_and_diagnosis():
     patient.save()
     logger.info("{} doctor created.".format(patient))
 
-    diagnosis_2 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id-1),
+    diagnosis = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id-1),
                                            patient=Patient.objects.get(user_id=user.id))
-    diagnosis_2.title = 'Mental Illness Baster SS'
-    diagnosis_2.description = 'Free to talk to me'
-    diagnosis_2.video_link = 'https://zoom.us/codeuniversity/1234567890'
-    diagnosis_2.video_password = '1qazxsw2'
-    diagnosis_2.status = RegisterStatus.REGISTERED
-    diagnosis_2.date = '2020-12-23'
-    diagnosis_2.save()
+    diagnosis.title = 'Mental Illness Baster SS'
+    diagnosis.description = 'Free to talk to me'
+    diagnosis.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis.video_password = '1qazxsw2'
+    diagnosis.status = RegisterStatus.REGISTERED
+    diagnosis.date = '2020-12-23'
+    diagnosis.save()
 
     return user
 

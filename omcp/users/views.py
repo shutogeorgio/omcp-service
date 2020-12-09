@@ -2,6 +2,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.views.generic import CreateView
+
+from .decorators import unauthenticated_user
 from .forms import PatientSignUpForm, DoctorSignUpForm, PatientProfileForm, DoctorProfileForm, LicenseReForm
 from django.contrib.auth.forms import AuthenticationForm
 

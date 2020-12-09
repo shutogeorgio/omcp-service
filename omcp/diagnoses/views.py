@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
@@ -15,13 +16,21 @@ def list_diagnosis(request):
     return render(request, template_path, context={'user': current_user, 'diagnoses': diagnoses})
 
 
+@login_required
 def desc_diagnosis(request, diagnosis_id):
     diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id)
     current_user = request.user
+    reveal_boolean = False
+    if current_user.is_patient:
+        if diagnosis.status == str(RegisterStatus.REGISTERED):
+            if diagnosis.patient.user.id == current_user.id:
+                reveal_boolean = True
     template_path = '../frontend/diagnoses/desc.html'
-    return render(request, template_path, context={'user': current_user, 'diagnosis': diagnosis})
+    return render(request, template_path,
+                  context={'user': current_user, 'diagnosis': diagnosis, 'reveal_boolean': reveal_boolean})
 
 
+@login_required
 def create_diagnosis(request):
     current_user = request.user
     template_path = '../frontend/diagnoses/create.html'
@@ -38,6 +47,7 @@ def create_diagnosis(request):
     return render(request, template_path, context={'user': current_user, 'form': form})
 
 
+@login_required
 def register_diagnosis(request, diagnosis_id):
     current_user = request.user
     diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id)

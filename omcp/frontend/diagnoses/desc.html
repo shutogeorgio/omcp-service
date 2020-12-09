@@ -21,6 +21,16 @@
                     <span class="text-sm">Description:</span>
                     <span class="appearance-none bg-gray-200 rounded w-full p-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mt-3">{{ diagnosis.description }}</span>
                 </div>
+                {% if reveal_boolean %}
+                    <div class="w-full mt-2 text-md flex flex-col">
+                        <span class="text-sm">Video Link:</span>
+                        <span class="appearance-none bg-gray-200 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mt-3">{{ diagnosis.video_link }}</span>
+                    </div>
+                    <div class="w-full mt-2 text-md flex flex-col">
+                        <span class="text-sm">Video Password:</span>
+                        <span class="appearance-none bg-gray-200 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mt-3">{{ diagnosis.video_password }}</span>
+                    </div>
+                {% endif %}
             </div>
             <div class="flex w-full">
                 <div class="flex items-center mr-auto">
