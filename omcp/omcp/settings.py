@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'a_#x$$ol-qcu_29p+3oqk_r=l%sssl!8jdrv43^9j9$g(2bck+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
@@ -106,14 +106,9 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_URL = '/login'
 
-if DEBUG:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static"),
-    ]
-else:
-    STATICFILES_DIRS = [
+STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "/static"),
-    ]
+]
 
 STATIC_URL = '/static/'
 
