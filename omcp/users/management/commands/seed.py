@@ -3,14 +3,15 @@ from venv import logger
 from django.contrib.auth.hashers import make_password
 from django.core.management.base import BaseCommand
 
-
 from ...models import User
 from ...patient import Patient
 from ...doctor import Doctor
 from ...license import License
 
 from diagnoses.register_status import RegisterStatus
+from diagnoses.diagnosis_type import DiagnosisType
 from diagnoses.models import Diagnosis
+from diagnoses.summary import Summary
 
 # python manage.py seed --mode=refresh
 from ...validity import Validity
@@ -67,32 +68,38 @@ def create_doctor_and_diagnosis():
     license.save()
     logger.info("{} doctor created.".format(doctor))
 
-    diagnosis_1 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
-    diagnosis_1.title = 'Mental Illness Baster SS'
-    diagnosis_1.description = 'Free to talk to me'
-    diagnosis_1.video_link = 'https://zoom.us/codeuniversity/1234567890'
-    diagnosis_1.video_password = '1qazxsw2'
-    diagnosis_1.status = RegisterStatus.UNREGISTERED
-    diagnosis_1.date = '2020-12-23'
-    diagnosis_1.save()
+    diagnosis_first = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
+    diagnosis_first.title = 'Mental Illness Baster SS'
+    diagnosis_first.description = 'Free to talk to me'
+    diagnosis_first.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_first.video_password = '1qazxsw2'
+    diagnosis_first.type = DiagnosisType.PREVENTIVE
+    diagnosis_first.image = 'diagnoses/no-img.jpg'
+    diagnosis_first.status = RegisterStatus.UNREGISTERED
+    diagnosis_first.date = '2020-12-23'
+    diagnosis_first.save()
 
-    diagnosis_2 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
-    diagnosis_2.title = 'Mental Illness'
-    diagnosis_2.description = 'Free to talk to me'
-    diagnosis_2.video_link = 'https://zoom.us/codeuniversity/1234567890'
-    diagnosis_2.video_password = '1qazxsw2'
-    diagnosis_2.status = RegisterStatus.UNREGISTERED
-    diagnosis_2.date = '2020-12-21'
-    diagnosis_2.save()
+    diagnosis_second = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
+    diagnosis_second.title = 'Mental Illness'
+    diagnosis_second.description = 'Free to talk to me'
+    diagnosis_second.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_second.video_password = '1qazxsw2'
+    diagnosis_second.type = DiagnosisType.MENTAL
+    diagnosis_second.image = 'diagnoses/mental.jpg'
+    diagnosis_second.status = RegisterStatus.UNREGISTERED
+    diagnosis_second.date = '2020-12-21'
+    diagnosis_second.save()
 
-    diagnosis_3 = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
-    diagnosis_3.title = 'Preventive Medicine Trial'
-    diagnosis_3.description = 'Free to talk to me'
-    diagnosis_3.video_link = 'https://zoom.us/codeuniversity/1234567890'
-    diagnosis_3.video_password = '1qazxsw2'
-    diagnosis_3.status = RegisterStatus.UNREGISTERED
-    diagnosis_3.date = '2020-12-21'
-    diagnosis_3.save()
+    diagnosis_third = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id))
+    diagnosis_third.title = 'Preventive Medicine Trial'
+    diagnosis_third.description = 'Free to talk to me'
+    diagnosis_third.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_third.video_password = '1qazxsw2'
+    diagnosis_third.type = DiagnosisType.PREVENTIVE
+    diagnosis_third.image = 'diagnoses/no-img.jpg'
+    diagnosis_third.status = RegisterStatus.UNREGISTERED
+    diagnosis_third.date = '2020-12-21'
+    diagnosis_third.save()
 
     return user
 
@@ -117,15 +124,33 @@ def create_patient_and_diagnosis():
     patient.save()
     logger.info("{} doctor created.".format(patient))
 
-    diagnosis = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id-1),
-                                           patient=Patient.objects.get(user_id=user.id))
-    diagnosis.title = 'Mental Illness Baster SS'
-    diagnosis.description = 'Free to talk to me'
-    diagnosis.video_link = 'https://zoom.us/codeuniversity/1234567890'
-    diagnosis.video_password = '1qazxsw2'
-    diagnosis.status = RegisterStatus.REGISTERED
-    diagnosis.date = '2020-12-23'
-    diagnosis.save()
+    diagnosis_first = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id - 1),
+                                               patient=Patient.objects.get(user_id=user.id))
+    diagnosis_first.title = 'Preventive Medicine'
+    diagnosis_first.description = 'Free to talk to me'
+    diagnosis_first.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_first.video_password = '1qazxsw2'
+    diagnosis_first.type = DiagnosisType.PREVENTIVE
+    diagnosis_first.image = 'diagnoses/no-img.jpg'
+    diagnosis_first.status = RegisterStatus.REGISTERED
+    diagnosis_first.date = '2020-12-23'
+    diagnosis_first.save()
+
+    diagnosis_second = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id - 1),
+                                                patient=Patient.objects.get(user_id=user.id))
+    diagnosis_second.title = 'Mental Illness Baster SS'
+    diagnosis_second.description = 'Free to talk to me'
+    diagnosis_second.video_link = 'https://zoom.us/codeuniversity/1234567890'
+    diagnosis_second.video_password = '1qazxsw2'
+    diagnosis_second.type = DiagnosisType.MENTAL
+    diagnosis_second.image = 'diagnoses/mental.jpg'
+    diagnosis_second.status = RegisterStatus.COMPLETED
+    diagnosis_second.date = '2020-12-23'
+    diagnosis_second.save()
+
+    summary = Summary.objects.create(diagnosis=diagnosis_second)
+    summary.comment = 'Take care yourself'
+    summary.save()
 
     return user
 

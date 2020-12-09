@@ -15,5 +15,5 @@ class Diagnosis(models.Model):
     video_password = models.CharField(max_length=50, default="")
     type = models.CharField(max_length=50, default=DiagnosisType.MENTAL)
     status = models.CharField(max_length=50, default=RegisterStatus.REGISTERED)
-    date = models.DateField()
+    date = models.DateField(blank=True, null=True)
     image = models.FileField(upload_to='diagnoses/', blank=True, default='diagnoses/no-img.jpg')

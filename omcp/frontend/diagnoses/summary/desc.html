@@ -1,0 +1,20 @@
+{% extends '/omcp/frontend/components/_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="row p-20 bg-pink-500">
+    <div class="mx-auto">
+        <div class="flex flex-col w-3/5 mx-auto py-5 px-10 bg-white rounded">
+            <div class="text-black">
+                <h2 class="text-xl text-pink-500">Summary</h2>
+            </div>
+            <div class="flex flex-col text-gray-700 text-sm items-center">
+                <div class="w-full flex border-b"></div>
+                <div class="w-full mt-2 text-md flex flex-col">
+                    <span class="text-sm">Comment:</span>
+                    <span class="appearance-none bg-gray-200 rounded w-full p-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline mt-3">{{ summary.comment }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
