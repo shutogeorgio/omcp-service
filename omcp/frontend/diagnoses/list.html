@@ -11,10 +11,11 @@
                 </div>
                 <div class="flex w-full flex-wrap mt-5">
                     {% for diagnosis in diagnoses %}
-                    <a href="/diagnoses/{{ diagnosis.id }}" class="mt-3 flex w-1/5 flex-col border border-gray-400 mr-5">
+                    <a href="/diagnoses/{{ diagnosis.id }}" class="mt-3 flex w-1/5 flex-col border border-gray-400 mr-5 rounded">
                         <img src="{{ diagnosis.image.url }}" class="flex h-25 w-full" />
                         <div class="flex flex-col p-2">
                             <div class="text-xl">{{ diagnosis.title }}</div>
+                            <div class="flex py-1 px-2 mt-1 text-sm rounded {% if diagnosis.type == 'Preventive Medicine' %} bg-pink-400 text-white {% else %} bg-white text-pink-400 border border-pink-400 {% endif %}  max-w-md mr-auto text-center">{{ diagnosis.type }}</div>
                             <div class="text-sm text-gray-700">{{ diagnosis.description }}</div>
                             <div class="flex">
                                 <div class="text-sm text-gray-500 mt-1">{{ diagnosis.date }}</div>
