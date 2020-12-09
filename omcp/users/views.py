@@ -162,3 +162,12 @@ def update_license(request):
         redirect('/login')
     return render(request, template_path,
                   context={'user': current_user, 'profile': profile, 'license': cert, 'form': form})
+
+
+def error_404(request, exception, template_name='../frontend/400.html'):
+    return render(request, template_name, status=404)
+
+
+def error_500(request, *args, **argv):
+    template_path = '../frontend/500.html'
+    return render(request, template_path, status=500)
