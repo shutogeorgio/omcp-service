@@ -20,6 +20,20 @@ def home(request):
     return render(request, template_path)
 
 
+def privacy_policy(request):
+    template_path = '../frontend/terms.html'
+    title = 'Privacy Policy'
+    content = 'We may use such information in the following ways To personalize your experience on our site and to allow us to deliver the type of content and product offerings in which you are most interested.To improve our website in order to better serve you.To allow us to better service you in responding to your customer service requests.To administer a contest, promotion, survey or other site feature.To quickly process your transactions.To send periodic emails regarding your order or other products and services.'
+    return render(request, template_path, context={'title': title, 'content': content})
+
+
+def terms_use(request):
+    template_path = '../frontend/terms.html'
+    title = 'Terms and Condition'
+    content = 'Harassment in any manner or form on the site, including via e-mail, chat, or by use of obscene or abusive language, is strictly forbidden. Impersonation of others, including a omcp.onejapanesedev.com or other licensed employee, host, or representative, as well as other members or visitors on the site is prohibited. You may not upload to, distribute, or otherwise publish through the site any content which is libelous, defamatory, obscene, threatening, invasive of privacy or publicity rights, abusive, illegal, or otherwise objectionable which may constitute or encourage a criminal offense, violate the rights of any party or which may otherwise give rise to liability or violate any law. You may not upload commercial content on the site or use the site to solicit others to join or become members of any other commercial online service or other organization.'
+    return render(request, template_path, context={'title': title, 'content': content})
+
+
 # Login & Signup Logic
 def signup(request):
     template_path = '../frontend/signup/index.html'

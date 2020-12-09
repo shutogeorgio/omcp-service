@@ -59,7 +59,7 @@ def create_doctor_and_diagnosis():
     doctor.zipcode = '12435'
     doctor.phone_number = '+49 30 12085961'
     doctor.image = 'users/no-img.svg'
-    doctor.validity = Validity.IN_REVIEW
+    doctor.validity = Validity.VALID
     doctor.speciality = "IT"
     doctor.save()
 
