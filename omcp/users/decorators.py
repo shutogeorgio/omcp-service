@@ -37,7 +37,7 @@ def doctor_only(view_func):
             group = request.user.groups.all()[0].name
 
         if group == 'patient':
-            return redirect('user-page')
+            return redirect('/diagnoses')
 
         if group == 'doctor':
             return view_func(request, *args, **kwargs)

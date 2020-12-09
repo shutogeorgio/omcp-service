@@ -28,6 +28,14 @@
                     </a>
                     {% endfor %}
                 </div>
+                <div class="flex mx-auto mt-5">
+                    {% if diagnoses.has_next %}
+                        <a class="px-4 py-2 mt-3 bg-pink-300 text-sm text-white rounded" href="?p={{ diagnoses.next_page_number }}">Next　→</a>
+                    {% endif %}
+                    {% if diagnoses.has_previous %}
+                        <a class="px-4 py-2 mt-3 mr-3 bg-pink-300 text-sm text-white rounded" href="?p={{ diagnoses.previous_page_number }}">← BACK</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
