@@ -12,7 +12,9 @@
             </button>
         </form>
         {% if user.is_doctor %}
-            <a href="{% url 'create_diagnosis' %}" class="mt-3 block bg-pink-500 hover:bg-pink-300 text-white text-sm text-white py-2 px-4 rounded ml-auto mt-3">Create Diagnosis</a>
+            {% if profile.validity == 'VALID' %}
+                <a href="{% url 'create_diagnosis' %}" class="mt-3 block bg-pink-500 hover:bg-pink-300 text-white text-sm text-white py-2 px-4 rounded ml-auto mt-3">Create Diagnosis</a>
+            {% endif %}
         {% endif %}
     </div>
 </div>

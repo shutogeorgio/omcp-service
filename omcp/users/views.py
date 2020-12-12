@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.views.generic import CreateView
 
-from .decorators import unauthenticated_user
+from .decorators import license_mods_eligibility, allowed_users, unauthenticated_user
 from .forms import PatientSignUpForm, DoctorSignUpForm, PatientProfileForm, DoctorProfileForm, LicenseReForm
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -35,6 +35,7 @@ def terms_use(request):
 
 
 # Login & Signup Logic
+@unauthenticated_user
 def signup(request):
     template_path = '../frontend/signup/index.html'
     return render(request, template_path)
@@ -88,43 +89,56 @@ def logout_view(request):
 
 # Profile Configuration
 def desc_profile(request, profile_id):
-    req_user = get_object_or_404(User, id=profile_id)
+    user = request.user
     template_path = '../frontend/profile/desc.html'
-    if req_user.is_patient:
-        profile = get_object_or_404(Patient, user_id=req_user.id)
-    elif req_user.is_doctor:
-        profile = Doctor.objects.get(user_id=req_user.id)
+    profile_owner = False
+    if user.is_patient:
+        profile = get_object_or_404(Patient, user_id=profile_id)
+        if profile.user_id == user.id:
+            profile_owner = True
+    elif user.is_doctor:
+        profile = Doctor.objects.get(user_id=profile_id)
+        if profile.user_id == user.id:
+            profile_owner = True
     else:
         profile = ''
-    return render(request, template_path, context={'user': req_user, 'profile': profile})
+    return render(request, template_path, context={'user': user, 'profile': profile, 'profile_owner': profile_owner})
 
 
 def update_profile(request, profile_id):
-    req_user = get_object_or_404(User, id=profile_id)
+    user = request.user
     template_path = '../frontend/profile/edit.html'
-
-    if req_user.is_patient:
-        profile = get_object_or_404(Patient, user_id=req_user.id)
+    license_eligibility = False
+    if user.is_patient:
+        profile = get_object_or_404(Patient, user_id=profile_id)
         form = PatientProfileForm(request.POST or None,
                                   request.FILES or None, instance=profile)
-        context = {'user': req_user, 'profile': profile, 'form': form}
-        if request.method == 'POST':
-            if form.is_valid():
-                form.save()
-                return redirect("/profile/{}".format(req_user.id))
+        context = {'user': user, 'profile': profile, 'form': form, 'license_eligibility': license_eligibility}
 
-    elif req_user.is_doctor:
-        profile = get_object_or_404(Doctor, user_id=req_user.id)
-        cert = get_object_or_404(License, doctor_id=req_user.id)
+        if user.id == profile_id:
+            if request.method == 'POST':
+                if form.is_valid():
+                    form.save()
+                    return redirect("/profile/{}".format(profile_id))
+                return redirect("/profile/{}".format(profile_id))
+
+    elif user.is_doctor:
+        profile = get_object_or_404(Doctor, user_id=profile_id)
+        cert = get_object_or_404(License, doctor_id=profile_id)
         form = DoctorProfileForm(request.POST or None,
                                  request.FILES or None, instance=profile)
-        context = {'user': req_user, 'profile': profile, 'form': form, 'license': cert}
-        if request.method == 'POST':
-            if form.is_valid():
-                form.save()
-                return redirect("/profile/{}".format(req_user.id))
+        if user.id == profile_id:
+            if cert.doctor.validity == 'IN_REVIEW':
+                license_eligibility = True
+        context = {'user': user, 'profile': profile, 'form': form, 'license': cert, 'license_eligibility': license_eligibility}
+
+        if user.id == profile_id:
+            if request.method == 'POST':
+                if form.is_valid():
+                    form.save()
+                    return redirect("/profile/{}".format(user.id))
     else:
-        redirect('/login')
+        return redirect('/login')
 
     return render(request, template_path, context=context)
 
@@ -134,7 +148,7 @@ def desc_license(request):
     current_user = request.user
     template_path = '../frontend/license/desc.html'
     if current_user.is_patient:
-        redirect('/')
+        redirect('/diagnoses/')
     elif current_user.is_doctor:
         profile = get_object_or_404(Doctor, user_id=current_user.id)
         cert = get_object_or_404(License, doctor_id=current_user.id)
@@ -144,6 +158,7 @@ def desc_license(request):
                   context={'user': current_user, 'profile': profile, 'license': cert})
 
 
+@license_mods_eligibility
 def update_license(request):
     current_user = request.user
     template_path = '../frontend/license/edit.html'

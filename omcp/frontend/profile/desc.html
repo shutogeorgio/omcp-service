@@ -10,7 +10,9 @@
                 </div>
                 <div class="text-black mr-auto flex items-center">
                     <img src="{{ profile.image.url }}" class="h-20 w-20 rounded-full mr-5" />
-                    <a href="{% url 'profile_update' profile_id=user.id %}" class="py-1 px-3 bg-gray-300 rounded">Edit</a>
+                    {% if profile_owner %}
+                        <a href="{% url 'profile_update' profile_id=user.id %}" class="py-1 px-3 bg-gray-300 rounded">Edit</a>
+                    {% endif %}
                 </div>
                 <span class="w-full border border-gray-300 mt-3"></span>
                 <div class="flex items-center flex-wrap mt-3">

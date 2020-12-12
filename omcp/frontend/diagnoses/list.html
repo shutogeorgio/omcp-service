@@ -11,7 +11,7 @@
                 </div>
                 <div class="flex w-full flex-wrap mt-5">
                     {% for diagnosis in diagnoses %}
-                    <a href="/diagnoses/{{ diagnosis.id }}" class="mt-3 flex w-1/5 flex-col border border-gray-400 mr-5 rounded">
+                    <a href="/diagnoses/{{ diagnosis.id }}" class="mt-10 flex w-1/5 flex-col border border-gray-400 mx-5 rounded">
                         <img src="{{ diagnosis.image.url }}" class="flex h-25 w-full" />
                         <div class="flex flex-col p-2">
                             <div class="text-xl">{{ diagnosis.title }}</div>
