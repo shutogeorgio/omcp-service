@@ -58,7 +58,7 @@ def create_doctor_and_diagnosis():
     doctor.address = 'Lohmühlenstraße 65, 12435 Berlin, Germany'
     doctor.zipcode = '12435'
     doctor.phone_number = '+49 30 12085961'
-    doctor.image = 'users/no-img.svg'
+    doctor.image = 'users/sample-m.jpg'
     doctor.validity = Validity.VALID
     doctor.speciality = "IT"
     doctor.save()
@@ -107,6 +107,33 @@ def create_doctor_and_diagnosis():
     return user
 
 
+def create_in_review_doctor():
+    user = User.objects.create()
+    user.username = 'invalid-doctor'
+    user.email = 'invalid-doctor@code.berlin'
+    user.password = make_password('1qazxsw2')
+    user.is_doctor = True
+    user.is_patient = False
+    user.save()
+
+    doctor = Doctor.objects.create(user=user)
+    doctor.name = 'invalid doctor'
+    doctor.country = 'Germany'
+    doctor.address = 'Lohmühlenstraße 65, 12435 Berlin, Germany'
+    doctor.zipcode = '12435'
+    doctor.phone_number = '+49 30 12085961'
+    doctor.image = 'users/no-img.svg'
+    doctor.validity = Validity.IN_REVIEW
+    doctor.speciality = "Invalidation"
+    doctor.save()
+
+    license = License.objects.create(doctor=doctor)
+    license.image = 'licenses/sample.jpg'
+    license.save()
+    logger.info("{} doctor created.".format(doctor))
+    return user
+
+
 def create_patient_and_diagnosis():
     user = User.objects.create()
     user.username = 'patient'
@@ -122,12 +149,12 @@ def create_patient_and_diagnosis():
     patient.address = 'Lohmühlenstraße 65, 12435 Berlin, Germany'
     patient.zipcode = '12435'
     patient.phone_number = '+49 30 12085961'
-    patient.image = 'users/no-img.svg'
+    patient.image = 'users/sample-w.jpg'
     patient.request = "IT"
     patient.save()
     logger.info("{} doctor created.".format(patient))
 
-    diagnosis_first = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id - 1),
+    diagnosis_first = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id - 2),
                                                patient=Patient.objects.get(user_id=user.id))
     diagnosis_first.title = 'Preventive Medicine'
     diagnosis_first.description = 'Free to talk to me'
@@ -139,7 +166,7 @@ def create_patient_and_diagnosis():
     diagnosis_first.date = '2020-12-23'
     diagnosis_first.save()
 
-    diagnosis_second = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id - 1),
+    diagnosis_second = Diagnosis.objects.create(doctor=Doctor.objects.get(user_id=user.id - 2),
                                                 patient=Patient.objects.get(user_id=user.id))
     diagnosis_second.title = 'Mental Illness Baster SS'
     diagnosis_second.description = 'Free to talk to me'
@@ -170,4 +197,5 @@ def run_seed(self, mode):
         return
 
     create_doctor_and_diagnosis()
+    create_in_review_doctor()
     create_patient_and_diagnosis()

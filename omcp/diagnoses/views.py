@@ -8,8 +8,9 @@ from .models import Diagnosis
 from .register_status import RegisterStatus
 from users.doctor import Doctor
 from users.patient import Patient
-
 from .summary import Summary
+
+from users.decorators import doctor_validity, summary_required
 
 
 def list_diagnosis(request):
@@ -40,6 +41,7 @@ def desc_diagnosis(request, diagnosis_id):
 
 
 @login_required
+@doctor_validity
 def create_diagnosis(request):
     current_user = request.user
     template_path = '../frontend/diagnoses/create.html'
@@ -88,6 +90,7 @@ def complete_diagnosis(request, diagnosis_id):
 
 # Summary Configuration
 @login_required
+@summary_required
 def create_summary(request, diagnosis_id):
     current_user = request.user
     diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id)
@@ -114,12 +117,13 @@ def list_own_diagnosis(request):
     if current_user.is_patient:
         patient = get_object_or_404(Patient, user_id=current_user.id)
         diagnoses = Diagnosis.objects.filter(patient=patient, status='COMPLETED')
-        context={'user': current_user, 'summaries': '', 'diagnoses': diagnoses}
+        context = {'user': current_user, 'summaries': '', 'diagnoses': diagnoses}
     elif current_user.is_doctor:
         doctor = get_object_or_404(Doctor, user_id=current_user.id)
         diagnoses = Diagnosis.objects.filter(doctor=doctor)
         context = {'user': current_user, 'summaries': '', 'diagnoses': diagnoses}
     return render(request, template_path, context=context)
+
 
 @login_required
 def desc_summary(request, diagnosis_id):
