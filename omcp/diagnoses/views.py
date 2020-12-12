@@ -13,6 +13,7 @@ from .summary import Summary
 from users.decorators import doctor_validity, summary_required
 
 
+@login_required
 def list_diagnosis(request):
     all_diagnoses = Diagnosis.objects.all()
     paginator = Paginator(all_diagnoses, 10)
@@ -20,7 +21,12 @@ def list_diagnosis(request):
     diagnoses = paginator.get_page(p)
     current_user = request.user
     template_path = '../frontend/diagnoses/list.html'
-    return render(request, template_path, context={'user': current_user, 'diagnoses': diagnoses})
+    profile = ''
+    if current_user.is_patient:
+        profile = get_object_or_404(Patient, user_id=current_user.id)
+    elif current_user.is_doctor:
+        profile = get_object_or_404(Doctor, user_id=current_user.id)
+    return render(request, template_path, context={'user': current_user, 'profile': profile, 'diagnoses': diagnoses})
 
 
 @login_required

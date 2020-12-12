@@ -25,10 +25,11 @@ class DiagnosisCreationForm(ModelForm):
         diagnosis.title = self.data.get('title')
         diagnosis.description = self.data['description']
         diagnosis.date = self.data['date']
-        image_data = files['image']
-        fs = FileSystemStorage()
-        filename = fs.save(image_data.name, image_data)
-        diagnosis.image = filename
+        if files:
+            image_data = files['image']
+            fs = FileSystemStorage()
+            filename = fs.save(image_data.name, image_data)
+            diagnosis.image = filename
         diagnosis.video_link = self.data['video_link']
         diagnosis.video_password = self.data['video_password']
         diagnosis.save()
