@@ -78,10 +78,10 @@ def license_mods_eligibility(view_func):
 def summary_required(view_func):
     def wrapper_function(request, diagnosis_id, *args, **kwargs):
         current_user = request.user
-        diagnosis = get_object_or_404(Diagnosis, user_id=diagnosis_id)
+        diagnosis = get_object_or_404(Diagnosis, id=diagnosis_id)
         if diagnosis.status == 'COMPLETED':
             if current_user.is_doctor & current_user.id == diagnosis.doctor.user_id:
-                return view_func(request, *args, **kwargs)
+                return view_func(request, diagnosis_id, *args, **kwargs)
         return redirect('/diagnoses/{}'.format(diagnosis_id))
 
     return wrapper_function

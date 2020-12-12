@@ -1,0 +1,22 @@
+{% extends '/omcp/frontend/components/_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="row p-20 bg-pink-500">
+    <div class="mx-auto">
+        <div class="flex flex-col w-3/5 mx-auto py-5 px-10 bg-white rounded">
+            <div class="text-black">
+                <h2 class="text-xl text-pink-500">Summaries</h2>
+            </div>
+            <div class="flex w-full">
+                {% if summaries %}
+                    {% for summary in summaries %}
+                        <div class="flex flex-col p-2">
+                            <div class="text-xl">{{ summary.comment }}</div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
